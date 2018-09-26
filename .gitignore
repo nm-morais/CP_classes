@@ -1,0 +1,12 @@
+
+CP_P1/\.idea/
+
+CP_P2/cmake-build-debug/CMakeFiles/
+
+*.xml
+
+*.class
+
+CP_P2/cmake-build-debug/
+
+CP_P1/approxPi\.iml
