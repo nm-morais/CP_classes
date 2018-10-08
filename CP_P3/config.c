@@ -55,7 +55,7 @@ GameConfig *game_config_new_from_cli(int argc, char *argv[])
   GameConfig *config;
   long generations;
 
-  if (argc != CLI_ARGC) {
+  if (argc <= CLI_ARGC) {
     fprintf(stderr, usage_message);
     return NULL;
   }
@@ -72,9 +72,18 @@ GameConfig *game_config_new_from_cli(int argc, char *argv[])
     return NULL;
   }
 
+  int no_prints;
+
+  if(argc > CLI_ARGC){
+    no_prints = !strcmp(argv[3],"-c");
+  } else no_prints = 0;
+
+  printf("NO PRINTS???? %d", no_prints);
+
   config = MEM_ALLOC(GameConfig);
   config->generations = (size_t) generations;
   config->input_file = file;
+  config->no_prints = no_prints;
 
   return config;
 }

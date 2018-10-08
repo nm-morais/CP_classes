@@ -1,6 +1,6 @@
-CC=gcc
-CFLAGS=-Wall -g -ansi -pedantic -c
-LDFLAGS=-lpcre -lpthread
+CC=gcc-6
+CFLAGS=-Wall -g -ansi -pedantic -c -fcilkplus
+LDFLAGS=-lpcre -lpthread -lcilkrts 
 
 
 OUTPUT=glife

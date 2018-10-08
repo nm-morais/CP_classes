@@ -241,6 +241,7 @@ int game_parse_board(Game *game, GameConfig *config)
   fseek(board, input_file_pos, SEEK_SET);
 
   return exit_code;
+  
 }
 
 void game_print_board(Game *game)
@@ -297,10 +298,17 @@ int game_tick(Game *game)
     tinfo[tnum].new_board = new_board;
     tinfo[tnum].width = BOARD_SLICE_WIDTH;
 
+    /*
     if (pthread_create(&tinfo[tnum].tid, NULL, &__process_slice, &tinfo[tnum])) {
       fprintf(stderr, "Error while creating thread %u. Waiting for other threads to finish.\n", tnum);
       retval = 1;
     }
+*/
+
+      cilk_spawn __process_slice(&tinfo[tnum].tid);
+
+
+
   }
 
   for (tnum = 0; tnum < slice_count; tnum++) {

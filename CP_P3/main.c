@@ -14,11 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "config.h"
 #include "game.h"
+
+#define gotoxy(x,y) printf("\033[%d;%dH", (x), (y))
 
 int main(int argc, char *argv[])
 {
@@ -39,19 +41,29 @@ int main(int argc, char *argv[])
 
     exit(1);
   }
-
+  printf("\x1b[2J\x1b[H");
   printf("Seed board:\n");
   game_print_board(game);
 
   for (generation = 1; generation <= game_config_get_generations(config); generation++) {
+    gotoxy(1,0);
+    usleep(50000);
     if (game_tick(game)) {
       fprintf(stderr, "Error while advancing to the next generation.\n");
       game_config_free(config);
       game_free(game);
     }
+    if(!config->no_prints){
+        printf("Generation %u:\n", generation);
+        game_print_board(game);
+    }
+  }
 
-    printf("\nGeneration %u:\n", generation);
-    game_print_board(game);
+
+  // just a case to print last string in case theres no prints
+  if(config->no_prints){
+      printf("Generation %u:\n", generation - 1);
+      game_print_board(game);
   }
 
   game_config_free(config);

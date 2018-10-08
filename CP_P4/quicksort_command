@@ -1,0 +1,1 @@
+docker run -it -v /Users/nunomorais/Documents/Projects/CP_classes/CP_P4:/quick-sort aanciaes/cilkplus-pcre
